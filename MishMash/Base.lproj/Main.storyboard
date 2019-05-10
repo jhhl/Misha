@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="ipad9_7" orientation="landscape">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Misha View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="MishaViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lb5-Ih-qCH" userLabel="Controls view">
+                                <rect key="frame" x="0.0" y="20" width="1024" height="40"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="F20-Sp-cEI">
+                                        <rect key="frame" x="0.0" y="0.0" width="1024" height="40"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eeh-gv-rQS" customClass="UILabeledButton">
+                                                <rect key="frame" x="0.0" y="0.0" width="108.5" height="40"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <state key="normal" title="Key: Bb"/>
+                                                <connections>
+                                                    <action selector="act_key:" destination="BYZ-38-t0r" eventType="touchUpInside" id="0Gw-rR-DHR"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ygu-fL-f1r" customClass="UILabeledButton">
+                                                <rect key="frame" x="112.5" y="0.0" width="230" height="40"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <state key="normal" title="Scale: Madenda"/>
+                                                <connections>
+                                                    <action selector="act_scale:" destination="BYZ-38-t0r" eventType="touchUpInside" id="qkL-5n-rfw"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jIx-Nl-CmF" customClass="UILabeledButton">
+                                                <rect key="frame" x="346.5" y="0.0" width="98.5" height="40"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <state key="normal" title="Tempo"/>
+                                                <connections>
+                                                    <action selector="act_tempo:" destination="BYZ-38-t0r" eventType="touchUpInside" id="F5f-Uu-ZXa"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UA5-ja-zz1" customClass="UILabeledButton">
+                                                <rect key="frame" x="449" y="0.0" width="62.5" height="40"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <state key="normal" title="|&lt;"/>
+                                                <connections>
+                                                    <action selector="act_rewind:" destination="BYZ-38-t0r" eventType="touchUpInside" id="CKh-YA-uct"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aZ4-bG-mVa" customClass="UILabeledButton">
+                                                <rect key="frame" x="515.5" y="0.0" width="62.5" height="40"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <state key="normal" title="&gt;"/>
+                                                <connections>
+                                                    <action selector="act_play:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Zio-GU-2er"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7ky-j4-JYK" customClass="UILabeledButton">
+                                                <rect key="frame" x="582" y="0.0" width="63" height="40"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <state key="normal" title="O"/>
+                                                <connections>
+                                                    <action selector="act_record:" destination="BYZ-38-t0r" eventType="touchUpInside" id="1S6-bd-8hA"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iNi-vq-h5F" customClass="UILabeledButton">
+                                                <rect key="frame" x="649" y="0.0" width="177.5" height="40"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <state key="normal" title="Chord Mode"/>
+                                                <connections>
+                                                    <action selector="act_chordMode:" destination="BYZ-38-t0r" eventType="touchUpInside" id="B62-CQ-Ybp"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fBZ-LG-qZq" customClass="UILabeledButton">
+                                                <rect key="frame" x="830.5" y="0.0" width="108.5" height="40"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <state key="normal" title="Presets"/>
+                                                <connections>
+                                                    <action selector="act_presets:" destination="BYZ-38-t0r" eventType="touchUpInside" id="66U-3W-pcb"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yj5-Ug-LnJ" customClass="UILabeledButton">
+                                                <rect key="frame" x="943" y="0.0" width="81" height="40"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <connections>
+                                                    <action selector="act_info:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Fpc-FA-148"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="Gmy-dg-bkV"/>
+                                    <constraint firstAttribute="bottom" secondItem="F20-Sp-cEI" secondAttribute="bottom" id="JlF-dj-pgi"/>
+                                    <constraint firstItem="F20-Sp-cEI" firstAttribute="top" secondItem="lb5-Ih-qCH" secondAttribute="top" id="LR1-Jv-0j6"/>
+                                    <constraint firstAttribute="trailing" secondItem="F20-Sp-cEI" secondAttribute="trailing" id="Zmr-OE-huf"/>
+                                    <constraint firstItem="F20-Sp-cEI" firstAttribute="leading" secondItem="lb5-Ih-qCH" secondAttribute="leading" id="ywN-MK-ovB"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="J11-zG-XVg" customClass="DegreeTouchView">
+                                <rect key="frame" x="0.0" y="64" width="1024" height="704"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="J11-zG-XVg" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="7vm-hD-kfK"/>
+                            <constraint firstItem="lb5-Ih-qCH" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="C7G-ow-Zrx"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="lb5-Ih-qCH" secondAttribute="trailing" id="HE4-Kf-EoB"/>
+                            <constraint firstItem="J11-zG-XVg" firstAttribute="top" secondItem="lb5-Ih-qCH" secondAttribute="bottom" constant="4" id="VKa-1C-7Gh"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="J11-zG-XVg" secondAttribute="trailing" id="f0O-0J-pD7"/>
+                            <constraint firstItem="lb5-Ih-qCH" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="fpt-C5-cEz"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="J11-zG-XVg" secondAttribute="bottom" id="p5B-SR-Zs8"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                    </view>
+                    <connections>
+                        <outlet property="bt_chordMode" destination="iNi-vq-h5F" id="vZS-dK-l1T"/>
+                        <outlet property="bt_info" destination="Yj5-Ug-LnJ" id="F6E-M3-MGd"/>
+                        <outlet property="bt_key" destination="eeh-gv-rQS" id="8wR-E5-Ami"/>
+                        <outlet property="bt_play" destination="aZ4-bG-mVa" id="jSE-I5-0e9"/>
+                        <outlet property="bt_presets" destination="fBZ-LG-qZq" id="Tbd-mW-6ED"/>
+                        <outlet property="bt_record" destination="7ky-j4-JYK" id="lbF-OY-1aO"/>
+                        <outlet property="bt_rewind" destination="UA5-ja-zz1" id="9oI-b0-wQj"/>
+                        <outlet property="bt_scale" destination="ygu-fL-f1r" id="cPJ-3X-Pon"/>
+                        <outlet property="bt_tempo" destination="jIx-Nl-CmF" id="IZs-s0-151"/>
+                        <outlet property="dtv_view" destination="J11-zG-XVg" id="dOC-Nv-qml"/>
+                        <outlet property="stk_controls" destination="F20-Sp-cEI" id="hHE-TU-OPH"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="22.767857142857142" y="44.927536231884062"/>
+        </scene>
+        <!--ScalePickerViewController-->
+        <scene sceneID="d5H-qZ-wi1">
+            <objects>
+                <viewController restorationIdentifier="ScalePickerViewController" storyboardIdentifier="ScalePickerViewController" id="N1A-eN-7KU" userLabel="ScalePickerViewController" customClass="ScalePickerViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="fhP-DC-oR5">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="7nX-wk-pCM">
+                                <rect key="frame" x="4" y="24" width="1016" height="30"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="auP-ei-o5K">
+                                        <rect key="frame" x="0.0" y="0.0" width="504" height="30"/>
+                                        <state key="normal" title="DONE"/>
+                                        <connections>
+                                            <action selector="act_done" destination="N1A-eN-7KU" eventType="touchUpInside" id="vQj-XQ-pa5"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KbI-8r-2fP">
+                                        <rect key="frame" x="512" y="0.0" width="504" height="30"/>
+                                        <state key="normal" title="CANCEL"/>
+                                        <connections>
+                                            <action selector="act_cancel" destination="N1A-eN-7KU" eventType="touchUpInside" id="muB-z4-ql0"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q6y-gb-0xv">
+                                <rect key="frame" x="4" y="58" width="1016" height="706"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="N1A-eN-7KU" id="oqQ-Y4-Eub"/>
+                                    <outlet property="delegate" destination="N1A-eN-7KU" id="Xqj-z3-2Tw"/>
+                                </connections>
+                            </pickerView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="G56-5p-a6j" firstAttribute="trailing" secondItem="q6y-gb-0xv" secondAttribute="trailing" constant="4" id="G5K-ea-vMF"/>
+                            <constraint firstItem="G56-5p-a6j" firstAttribute="bottom" secondItem="q6y-gb-0xv" secondAttribute="bottom" constant="4" id="LEj-fJ-Bdh"/>
+                            <constraint firstItem="G56-5p-a6j" firstAttribute="trailing" secondItem="7nX-wk-pCM" secondAttribute="trailing" constant="4" id="PBe-zP-lE0"/>
+                            <constraint firstItem="q6y-gb-0xv" firstAttribute="top" secondItem="7nX-wk-pCM" secondAttribute="bottom" constant="4" id="Xie-qX-Mmx"/>
+                            <constraint firstItem="7nX-wk-pCM" firstAttribute="leading" secondItem="G56-5p-a6j" secondAttribute="leading" constant="4" id="he1-6r-vZ0"/>
+                            <constraint firstItem="q6y-gb-0xv" firstAttribute="leading" secondItem="fhP-DC-oR5" secondAttribute="leading" constant="4" id="kHD-Hm-DVD"/>
+                            <constraint firstItem="7nX-wk-pCM" firstAttribute="top" secondItem="G56-5p-a6j" secondAttribute="top" constant="4" id="zpU-aU-HSb"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="G56-5p-a6j"/>
+                    </view>
+                    <connections>
+                        <outlet property="bt_cancel" destination="KbI-8r-2fP" id="xvF-Lm-qiB"/>
+                        <outlet property="bt_done" destination="auP-ei-o5K" id="hfw-ek-Qen"/>
+                        <outlet property="pv_scales" destination="q6y-gb-0xv" id="BMY-x0-vY3"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Dnf-jt-HYE" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+        </scene>
+        <!--KeyPickerViewController-->
+        <scene sceneID="zRY-LV-t2p">
+            <objects>
+                <viewController storyboardIdentifier="KeyPickerViewController" title="KeyPickerViewController" id="vqa-I7-NiC" customClass="KeyPickerViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Gaf-uk-MGq">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="qrM-w9-p2a">
+                                <rect key="frame" x="4" y="24" width="1016" height="30"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OEb-lC-Oqb">
+                                        <rect key="frame" x="0.0" y="0.0" width="504" height="30"/>
+                                        <state key="normal" title="DONE"/>
+                                        <connections>
+                                            <action selector="act_done" destination="vqa-I7-NiC" eventType="touchUpInside" id="ThY-eg-U7P"/>
+                                            <action selector="act_done" destination="N1A-eN-7KU" eventType="touchUpInside" id="UXM-oX-Xij"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Fv-OX-S0O">
+                                        <rect key="frame" x="512" y="0.0" width="504" height="30"/>
+                                        <state key="normal" title="CANCEL"/>
+                                        <connections>
+                                            <action selector="act_cancel" destination="vqa-I7-NiC" eventType="touchUpInside" id="PJh-tS-psz"/>
+                                            <action selector="act_cancel" destination="N1A-eN-7KU" eventType="touchUpInside" id="xm4-E8-G0Q"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6jd-xt-Ehf">
+                                <rect key="frame" x="4" y="58" width="1016" height="706"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="vqa-I7-NiC" id="v4l-OI-DHW"/>
+                                    <outlet property="delegate" destination="vqa-I7-NiC" id="GPI-Wa-Yn2"/>
+                                </connections>
+                            </pickerView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="6jd-xt-Ehf" firstAttribute="top" secondItem="qrM-w9-p2a" secondAttribute="bottom" constant="4" id="7ej-4J-ioQ"/>
+                            <constraint firstItem="6jd-xt-Ehf" firstAttribute="top" secondItem="qrM-w9-p2a" secondAttribute="bottom" constant="4" id="A6y-T4-gA3"/>
+                            <constraint firstItem="O70-EQ-xUt" firstAttribute="trailing" secondItem="6jd-xt-Ehf" secondAttribute="trailing" constant="4" id="Exu-1Z-qvt"/>
+                            <constraint firstItem="6jd-xt-Ehf" firstAttribute="leading" secondItem="O70-EQ-xUt" secondAttribute="leading" constant="4" id="Ig6-SQ-9M8"/>
+                            <constraint firstItem="qrM-w9-p2a" firstAttribute="top" secondItem="O70-EQ-xUt" secondAttribute="top" constant="4" id="RxN-Ud-VsY"/>
+                            <constraint firstItem="O70-EQ-xUt" firstAttribute="trailing" secondItem="qrM-w9-p2a" secondAttribute="trailing" constant="4" id="gDu-9l-bel"/>
+                            <constraint firstItem="qrM-w9-p2a" firstAttribute="leading" secondItem="O70-EQ-xUt" secondAttribute="leading" constant="4" id="hpO-kc-uug"/>
+                            <constraint firstItem="O70-EQ-xUt" firstAttribute="bottom" secondItem="6jd-xt-Ehf" secondAttribute="bottom" constant="4" id="ord-ff-RIw"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="O70-EQ-xUt"/>
+                    </view>
+                    <connections>
+                        <outlet property="bt_cancel" destination="8Fv-OX-S0O" id="f2Y-vz-U7L"/>
+                        <outlet property="bt_done" destination="OEb-lC-Oqb" id="YIL-Fc-NZ8"/>
+                        <outlet property="pv_keys" destination="6jd-xt-Ehf" id="1Xg-3A-tA6"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kZ8-Et-XvY" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+        </scene>
+    </scenes>
+</document>

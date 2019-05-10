@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>name</key>
+		<string>Default</string>
+		<key>cl_bg</key>
+		<string>#8A8</string>
+		<key>cl_bg_main</key>
+		<string>#CCD</string>
+		<key>cl_lo</key>
+		<string>#8A8</string>
+		<key>cl_hi</key>
+		<string>#BFB</string>
+		<key>cl_edge1</key>
+		<string>#222</string>
+		<key>cl_edge2</key>
+		<string>#444</string>
+		<key>cl_hi_text</key>
+		<string>#000</string>
+		<key>cl_lo_text</key>
+		<string>#886</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Dark</string>
+		<key>cl_bg</key>
+		<string>#222</string>
+		<key>cl_bg_main</key>
+		<string>#000</string>
+		<key>cl_lo</key>
+		<string>#8F8</string>
+		<key>cl_hi</key>
+		<string>#CFC</string>
+		<key>cl_edge1</key>
+		<string>#DDD</string>
+		<key>cl_edge2</key>
+		<string>#AAA</string>
+		<key>cl_hi_text</key>
+		<string>#FFF</string>
+		<key>cl_lo_text</key>
+		<string>#DDD</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Red</string>
+		<key>cl_bg</key>
+		<string>#FCC</string>
+		<key>cl_bg_main</key>
+		<string>#DAA</string>
+		<key>cl_lo</key>
+		<string>#C99</string>
+		<key>cl_hi</key>
+		<string>#E84</string>
+		<key>cl_edge1</key>
+		<string>#222</string>
+		<key>cl_edge2</key>
+		<string>#444</string>
+		<key>cl_hi_text</key>
+		<string>#800</string>
+		<key>cl_lo_text</key>
+		<string>#CA8</string>
+	</dict>
+</array>
+</plist>

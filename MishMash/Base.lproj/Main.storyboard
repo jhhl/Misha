@@ -25,7 +25,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="1024" height="40"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eeh-gv-rQS" customClass="UILabeledButton">
-                                                <rect key="frame" x="0.0" y="0.0" width="108.5" height="40"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="158" height="40"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <state key="normal" title="Key: Bb"/>
                                                 <connections>
@@ -33,47 +33,15 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ygu-fL-f1r" customClass="UILabeledButton">
-                                                <rect key="frame" x="112.5" y="0.0" width="230" height="40"/>
+                                                <rect key="frame" x="162" y="0.0" width="334.5" height="40"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <state key="normal" title="Scale: Madenda"/>
                                                 <connections>
                                                     <action selector="act_scale:" destination="BYZ-38-t0r" eventType="touchUpInside" id="qkL-5n-rfw"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jIx-Nl-CmF" customClass="UILabeledButton">
-                                                <rect key="frame" x="346.5" y="0.0" width="98.5" height="40"/>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <state key="normal" title="Tempo"/>
-                                                <connections>
-                                                    <action selector="act_tempo:" destination="BYZ-38-t0r" eventType="touchUpInside" id="F5f-Uu-ZXa"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UA5-ja-zz1" customClass="UILabeledButton">
-                                                <rect key="frame" x="449" y="0.0" width="62.5" height="40"/>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <state key="normal" title="|&lt;"/>
-                                                <connections>
-                                                    <action selector="act_rewind:" destination="BYZ-38-t0r" eventType="touchUpInside" id="CKh-YA-uct"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aZ4-bG-mVa" customClass="UILabeledButton">
-                                                <rect key="frame" x="515.5" y="0.0" width="62.5" height="40"/>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <state key="normal" title="&gt;"/>
-                                                <connections>
-                                                    <action selector="act_play:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Zio-GU-2er"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7ky-j4-JYK" customClass="UILabeledButton">
-                                                <rect key="frame" x="582" y="0.0" width="63" height="40"/>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <state key="normal" title="O"/>
-                                                <connections>
-                                                    <action selector="act_record:" destination="BYZ-38-t0r" eventType="touchUpInside" id="1S6-bd-8hA"/>
-                                                </connections>
-                                            </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iNi-vq-h5F" customClass="UILabeledButton">
-                                                <rect key="frame" x="649" y="0.0" width="177.5" height="40"/>
+                                                <rect key="frame" x="500.5" y="0.0" width="258" height="40"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <state key="normal" title="Chord Mode"/>
                                                 <connections>
@@ -81,7 +49,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fBZ-LG-qZq" customClass="UILabeledButton">
-                                                <rect key="frame" x="830.5" y="0.0" width="108.5" height="40"/>
+                                                <rect key="frame" x="762.5" y="0.0" width="158" height="40"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <state key="normal" title="Presets"/>
                                                 <connections>
@@ -89,7 +57,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yj5-Ug-LnJ" customClass="UILabeledButton">
-                                                <rect key="frame" x="943" y="0.0" width="81" height="40"/>
+                                                <rect key="frame" x="924.5" y="0.0" width="99.5" height="40"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <connections>
                                                     <action selector="act_info:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Fpc-FA-148"/>
@@ -130,12 +98,8 @@
                         <outlet property="bt_chordMode" destination="iNi-vq-h5F" id="vZS-dK-l1T"/>
                         <outlet property="bt_info" destination="Yj5-Ug-LnJ" id="F6E-M3-MGd"/>
                         <outlet property="bt_key" destination="eeh-gv-rQS" id="8wR-E5-Ami"/>
-                        <outlet property="bt_play" destination="aZ4-bG-mVa" id="jSE-I5-0e9"/>
                         <outlet property="bt_presets" destination="fBZ-LG-qZq" id="Tbd-mW-6ED"/>
-                        <outlet property="bt_record" destination="7ky-j4-JYK" id="lbF-OY-1aO"/>
-                        <outlet property="bt_rewind" destination="UA5-ja-zz1" id="9oI-b0-wQj"/>
                         <outlet property="bt_scale" destination="ygu-fL-f1r" id="cPJ-3X-Pon"/>
-                        <outlet property="bt_tempo" destination="jIx-Nl-CmF" id="IZs-s0-151"/>
                         <outlet property="dtv_view" destination="J11-zG-XVg" id="dOC-Nv-qml"/>
                         <outlet property="stk_controls" destination="F20-Sp-cEI" id="hHE-TU-OPH"/>
                     </connections>

@@ -15,7 +15,9 @@ NS_ASSUME_NONNULL_BEGIN
 {
     NSArray *allDests;
     MIKMIDIDestinationEndpoint * destinationEndpoint;
-    NSUInteger lastNoteOn;
+    NSUInteger currentlyPlayingNotes[256];
+    NSUInteger playingNotesCount;
+
 
 }
 @property (strong,nonatomic,nullable)     MIKMIDIDevice * device;

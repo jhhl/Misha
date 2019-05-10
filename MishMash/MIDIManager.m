@@ -9,6 +9,9 @@
 #import "MIDIManager.h"
 
 @implementation MIDIManager
+
+#define NOTE_EMPTY 1000
+
 static MIDIManager * instance;
 
 //put other statics here for class variables
@@ -33,6 +36,7 @@ static MIDIManager * instance;
         // will be more sophisticated.
         [self connectToMIDIDevice];
         [self listenForMIDIChanges];
+        playingNotesCount=0;
     }
     return self;
 }
@@ -102,7 +106,7 @@ static MIDIManager * instance;
     NSUInteger mNote = MAX(0.0,MIN(127,floor(note+0.5)));
     NSUInteger mVel = MAX(0.0,MIN(127,vel * 127.0));
     MIKMIDINoteOnCommand *noteOn = [MIKMIDINoteOnCommand noteOnCommandWithNote:mNote velocity:mVel channel:0 timestamp:date];
-     lastNoteOn=mNote;
+    [self insert:mNote];
     
     MIKMIDINoteOffCommand *noteOff = [MIKMIDINoteOffCommand noteOffCommandWithNote:mNote velocity:0 channel:0 timestamp:[date dateByAddingTimeInterval:0.5]];
     
@@ -112,6 +116,7 @@ static MIDIManager * instance;
         [dm sendCommands:@[noteOn, noteOff] toEndpoint:desty error:&error];
     }
 }
+
 - (void) noteOn:(dmidi) note vel:(float) vel
 {
     NSError *error = nil;
@@ -126,7 +131,7 @@ static MIDIManager * instance;
     {
         [dm sendCommands:@[noteOn] toEndpoint:desty error:&error];
     }
-     lastNoteOn=mNote;
+    [self insert:mNote];
 }
 
 - (void) noteOff:(dmidi) note vel:(float) vel
@@ -154,16 +159,23 @@ static MIDIManager * instance;
     NSUInteger mVel = MAX(0.0,MIN(127,vel * 127.0));
     
     NSMutableArray * ma_data = [[NSMutableArray alloc] init];
-//
-//    if(lastNoteOn>=0)
-//    {
-//        MIKMIDINoteOffCommand *noteOff = [MIKMIDINoteOffCommand noteOffCommandWithNote:lastNoteOn velocity:mVel channel:0 timestamp:date];
-//        lastNoteOn=-1;
-//        [ma_data addObject:noteOff];
-//    }
+    if(playingNotesCount>0)
+    {
+        for(int i =0;i<playingNotesCount;i++)
+        {
+            if(currentlyPlayingNotes[i]!= NOTE_EMPTY)
+            {
+                NSUInteger noffMe =currentlyPlayingNotes[i];
+                MIKMIDINoteOffCommand *noteOff = [MIKMIDINoteOffCommand noteOffCommandWithNote:noffMe velocity:mVel channel:0 timestamp:date];
+                [ma_data addObject:noteOff];
+            }
+        }
+        [self removeAll];
+     }
+    
     // make thiss after the noteoff
     MIKMIDINoteOnCommand *noteOn = [MIKMIDINoteOnCommand noteOnCommandWithNote:mNote velocity:mVel channel:0 timestamp:[date dateByAddingTimeInterval:0.01]];
-    lastNoteOn=mNote;
+    [self insert:mNote];
      [ma_data addObject:noteOn];
     
     MIKMIDIDeviceManager *dm = [MIKMIDIDeviceManager sharedDeviceManager];
@@ -191,7 +203,7 @@ static MIDIManager * instance;
     {
         [dm sendCommands:@[noteOff] toEndpoint:desty error:&error];
     }
-    lastNoteOn=-1;
+    [self remove:mNote];
 }
 
 - (void) ANO
@@ -201,12 +213,51 @@ static MIDIManager * instance;
     
     MIKMIDIControlChangeCommand *ano = [MIKMIDIControlChangeCommand controlChangeCommandWithControllerNumber: 123 value:0];
 
-    
     MIKMIDIDeviceManager *dm = [MIKMIDIDeviceManager sharedDeviceManager];
     for(MIKMIDIDestinationEndpoint * desty in allDests)
     {
         [dm sendCommands:@[ano] toEndpoint:desty error:&error];
+        
+        // of fooey sometimes you need to send everything
+        for(int noff = 0 ; noff<128;noff++)
+        {
+            NSDate *date = [NSDate date];
+            
+            MIKMIDINoteOffCommand *noteOff = [MIKMIDINoteOffCommand noteOffCommandWithNote:noff velocity:0 channel:0 timestamp:date];
+            [dm sendCommands:@[noteOff] toEndpoint:desty error:&error];
+        }
     }
-    lastNoteOn=-1;
+    [self removeAll];
+}
+
+//MARK: push, pop, etc
+
+-(void) insert:(NSUInteger) v
+{
+    currentlyPlayingNotes[ playingNotesCount]=v;
+    playingNotesCount++;
+}
+
+// efficient kind of trim.
+-(void) remove:(NSUInteger) v
+{
+    if(playingNotesCount>0)
+    {
+        for(int i = 0;i<playingNotesCount;i++)
+        {
+            if(currentlyPlayingNotes[i]==v)
+            {
+                currentlyPlayingNotes[i]=NOTE_EMPTY;
+            }
+        }
+        while((playingNotesCount>0) && (currentlyPlayingNotes[ playingNotesCount-1]==NOTE_EMPTY))
+        {
+            playingNotesCount-=1;
+        }
+    }
+}
+-(void) removeAll
+{
+    playingNotesCount=0;
 }
 @end

@@ -4,8 +4,10 @@
 //
 //  Created by Henry Lowengard on 4/12/19.
 //  Copyright © 2019 net.jhhl. All rights reserved.
+// should just show the scale withthe base at the top, octave dots below.
+// it may have buttons available in the corners
+// or they may belong to the main VC
 //
-
 #import "ScalePieView.h"
 #import "Skins.h"
 #import "Scales.h"
@@ -25,6 +27,10 @@
      {
          self.backgroundColor = sk.cl_lo;
          self.tintColor = sk.cl_hi_text;
+         if(self->_cgcr_bg)
+         {
+             CGColorRelease(self->_cgcr_bg);
+         }
          self->_cgcr_bg = CGColorRetain(sk.cl_hi.CGColor);
      }];
 }

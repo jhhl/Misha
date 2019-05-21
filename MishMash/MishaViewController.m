@@ -12,6 +12,7 @@
 #import "MIDIManager.h"
 #import "ScalePickerViewController.h"
 #import "KeyPickerViewController.h"
+#import "MIDIViewController.h"
 
 @interface MishaViewController ()
 
@@ -37,6 +38,7 @@
     // all the other skinnables should be set by now I hope
     [Skins._  setSkinToPresetNamed:@"Default"];
 }
+
 #pragma mark ViewController methods
 - (void) viewWillAppear:(BOOL) animated
 {
@@ -89,6 +91,7 @@
 }
 - (IBAction) act_home:(UIButton * _Nonnull) button
 {
+    
 }
 - (IBAction) act_undo:(UIButton * _Nonnull) button
 {
@@ -100,12 +103,20 @@
 - (IBAction) act_presets:(UIButton * _Nonnull) button
 {
 }
+- (IBAction) act_midi:(UIButton * _Nonnull) button
+{
+    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    MIDIViewController * midivc =      (MIDIViewController *) [sb instantiateViewControllerWithIdentifier:@"MIDIViewController"];
+    [self presentViewController:midivc animated:YES completion:^{
+        
+    }];
+}
 - (IBAction) act_info:(UIButton * _Nonnull) button
 {
     [MIDIManager._ ANO];
 }
 
-//MARK: - hmm
+//MARK: - DegreeTouchViewDelegate
 -(void) dtviewChanged:(DegreeTouchView*) dtv;
 {
     // oh yeah.
@@ -113,10 +124,33 @@
 //    [MIDIManager._ noteOnAndOff:newNote vel:0.8];
     [MIDIManager._ noteOnMono:newNote vel:0.8];
 }
+
 -(void) dtviewNoff:(DegreeTouchView*) dtv;
 {
     // this note is actually irrelevant -
     dmidi newNote = Scales._.cursor.note.dmidi;
    [MIDIManager._ noteOffMono:newNote vel:0.8];
+}
+
+-(void) dtviewButtonTouched:(UILabeledButton *) b type:(int) type;
+{
+    if(type == 1)
+    {
+        //home
+        Scales._.cursor = Scales._.scale.scaleNodeBaseNode;
+        [_dtv_view.spv_pie setNeedsDisplay];
+    }
+    if(type == 2)
+    {
+        //undo
+    }
+    if(type == 3)
+    {
+        //capo_up
+    }
+    if(type == 4)
+    {
+        //capo_down
+    }
 }
 @end

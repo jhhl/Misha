@@ -29,8 +29,7 @@ DegreeTouchViewDelegate
 // will be laid out algorithmically
 @property (strong,nonatomic,nonnull) IBOutlet UIView * vw_container;
 // what are these?
-@property (strong,nonatomic,nonnull) IBOutlet UILabeledButton * bt_home;
-@property (strong,nonatomic,nonnull) IBOutlet UILabeledButton * bt_undo;
+
 @property (strong,nonatomic,nonnull) IBOutlet UILabeledButton * bt_midi;
 
 

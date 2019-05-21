@@ -54,31 +54,22 @@
     _pattern = [pattern copy];
     _base = base;
     NSArray * parts = [pattern componentsSeparatedByString:@","];
+    
+    // convert to dPattern, and find repeat
     dpattern_count = 0;
     repeat = 0.0; // this is the repeat as inntervals (midi 12ED2)
-    
     for( NSString * part in parts)
     {
         dmidi this = [part doubleValue]; // this might get sophisticated
         dpattern[dpattern_count++] = this;
         repeat+=this;
     }
+    
     // now dial down the midi from the base until it's >= 0
-    dmidi zero = base;
-    NSUInteger place = dpattern_count-1;
-    while(zero>0.0)
-    {
-        zero-=dpattern[place];
-        place = (dpattern_count + place-1) % dpattern_count;
-    }
-    // back up ..
-    place = (place+1 ) % dpattern_count;
-    if(zero<0.0)
-    {
-        // back up more
-        place = (place+1 ) % dpattern_count;
-        zero +=dpattern[place];
-    }
+    // the idea is to precalculate the MIDI notes .. even if they aren't midi notes.
+    // we should really stop when the midi note is <0 and >127
+    // we COULD assume the base is where it should be in 12ED0, though, and then run down and up from there.
+    
     
     // now fill up the actual array
     // this could actually be a C array, with some maint.
@@ -86,42 +77,67 @@
     // this sets up a boring linear up-down set of links.
     //
     [self clearScaleNode:_scaleNodeCursor];
+    // make the base node...
+    ScaleNode * node = [[ScaleNode alloc] init];
+    node.note = [[Note alloc] init];
+    node.note.dmidi = base;
     
-    _scaleNodeBaseNode=NULL;
-    _scaleNodeFirst=NULL;
-    _scaleNodeCursor=NULL;
+    _scaleNodeBaseNode=node;
+    _scaleNodeFirst=NULL; // this will be the lowest node when we have one
+    _scaleNodeCursor=node;
+    dmidi cursor = base;
+    NSUInteger place=  dpattern_count-1;
     
-    for(dmidi mi=zero;mi<128;)
+    // build down
+    while(cursor>=0.0)
     {
+        // go down by one
+       cursor-=dpattern[place];
+        
+        if(cursor<0.0)
+        {
+            _scaleNodeFirst = _scaleNodeCursor;
+            break;
+        }
+        // yeah, go down one
+        place= (place-1 + dpattern_count) %dpattern_count;
+        
         ScaleNode * node = [[ScaleNode alloc] init];
         node.note = [[Note alloc] init];
-
-        node.note.dmidi = mi;
+        node.note.dmidi = cursor;
         // figure a name for this?
         
-        node.down = _scaleNodeCursor;
+        node.up = _scaleNodeCursor; // the last one...
+        _scaleNodeCursor.down = node;
+        _scaleNodeCursor = node;
+
+    }
+    // build up
+    cursor = base;
+    place= 1;
+    _scaleNodeCursor=_scaleNodeBaseNode;
+    while(cursor<=127.0)
+    {
+        // go up by one
+        cursor+=dpattern[place];
+        
+        if(cursor>127.0)
+        {
+            break;
+        }
+        //go up
+        place= (place+1) %dpattern_count;
+        
+        ScaleNode * node = [[ScaleNode alloc] init];
+        node.note = [[Note alloc] init];
+        node.note.dmidi = cursor;
+        // figure a name for this?
+        
+        node.down = _scaleNodeCursor; // the last one...
         _scaleNodeCursor.up = node;
         _scaleNodeCursor = node;
-        
-        // ideally, if you go down, you go back up and hit the base note.
-        if(node.note.dmidi == base)
-        {
-            _scaleNodeBaseNode = node;
-        }
-        if(_scaleNodeBaseNode == NULL)
-        {
-            _scaleNodeBaseNode = node; // just so it's set to something.
-        }
-        if(_scaleNodeFirst == NULL)
-        {
-            _scaleNodeFirst = node; // so we can scan the whole thing
-        }
-        
-        mi+=dpattern[place];
-        
-        place= (place+1) %dpattern_count;
     }
-   
+    
     // link the top to the bottom for now .. or .. to iteslf?
     _scaleNodeCursor.up = _scaleNodeCursor;
     // link the first guy's down to itslef too

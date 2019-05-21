@@ -46,7 +46,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 typedef double dmidi;
 
-
+#define MAX_POLYPHONY 8
 
 @interface Consts : NSObject
 

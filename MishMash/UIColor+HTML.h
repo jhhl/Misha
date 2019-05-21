@@ -17,8 +17,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (CGFloat)alpha;
 - (UIColor *)invertedColor;
-- (UIColor * _Nonnull)zapAlpha:(CGFloat) alpha;
+- (UIColor * )zapAlpha:(CGFloat) alpha;
 - (UIColor *)darkenBy:(CGFloat) darkness;
+- (UIColor * )offset:(UIColor * ) fromColor ByHueAngle:(CGFloat) hueAngle;
 
 - (NSString *)htmlHexString;
 

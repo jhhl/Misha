@@ -520,4 +520,15 @@ CGFloat forwlerp(CGFloat t, CGFloat lo,CGFloat hi)
     }
     return [NSArray arrayWithArray:colors];
 }
+
+/*
+ hueAngle is given in 0..1*/
+- (UIColor * )offset:(UIColor * ) fromColor ByHueAngle:(CGFloat) hueAngle;
+{
+    CGFloat fc[4];
+     [fromColor getHue:&fc[0] saturation:&fc[1]  brightness:&fc[2]  alpha:&fc[3]] ;
+    fc[0]=fmodf(fc[0]+hueAngle+1.0,1.0);
+    return [UIColor colorWithHue:fc[0] saturation:fc[1] brightness:fc[2] alpha:fc[3]];
+}
+
 @end

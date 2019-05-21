@@ -8,6 +8,15 @@
 
 #import "MIDIManager.h"
 
+#define LOG_MIDI_IO 1
+
+@interface MIDIManager()
+{
+    NSMutableSet * allSources;
+    NSMutableSet * allDestinations;
+}
+@end
+
 @implementation MIDIManager
 
 #define NOTE_EMPTY 1000
@@ -34,6 +43,8 @@ static MIDIManager * instance;
     self = [super init];
     if (self) {
         // will be more sophisticated.
+        allSources  =[[NSMutableSet alloc] init];
+        allDestinations  =[[NSMutableSet alloc] init];
         [self connectToMIDIDevice];
         [self listenForMIDIChanges];
         playingNotesCount=0;
@@ -66,36 +77,57 @@ static MIDIManager * instance;
 
 - (void) connectToMIDIDevice
 {
-    NSArray *availableMIDIDevices = [[MIKMIDIDeviceManager sharedDeviceManager] availableDevices];
-    // be smarter about this. 
-    self.device =[availableMIDIDevices lastObject];
+    [self establishDevicesAndEndpoints];
+    // picking them is a different process, but  by default, pick something?
+    // this logic has to be more like PolyHarp's.
+    [self pickSourceNamed:@"Network Session 1" enable:YES];
     
-    NSArray *sources = [self.device.entities valueForKeyPath:@"@unionOfArrays.sources"];
-    MIKMIDISourceEndpoint * source = [sources firstObject]; // Or whichever source you want, but often there's only one.
-    
-    // Next, connect to that source using MIKMIDIDeviceManager:
-    
-    MIKMIDIDeviceManager *manager = [MIKMIDIDeviceManager sharedDeviceManager];
-    NSError *error = nil;
-    
-    BOOL success = [manager connectInput:source error:&error eventHandler:^(MIKMIDISourceEndpoint *source, NSArray *commands) {
-        for (MIKMIDICommand *command in commands) {
-            // Handle each command
-            // looks like incoming MIDI commands here ..
-            NSLog(@"%@",command);
-        }
-    }];
-    if (!success) {
-        NSLog(@"Unable to connect to %@: %@", source, error);
-        // Handle the error
-    }
-    
-    // virtualDestinations
-//    allDests = [self.device.entities valueForKeyPath:@"@unionOfArrays.destinations"];
-    allDests = [[MIKMIDIDeviceManager sharedDeviceManager] virtualDestinations] ;
-    destinationEndpoint = [allDests firstObject]; // Or whichever source you want, but often there's only one.
 }
 
+- (void) establishDevicesAndEndpoints
+{
+    MIKMIDIDeviceManager *manager = [MIKMIDIDeviceManager sharedDeviceManager];
+    NSArray *availableMIDIDevices = [manager availableDevices];
+    // be smarter about this.
+    
+    [allSources removeAllObjects];
+    [allDestinations  removeAllObjects];
+
+    for(MIKMIDIDevice * device in availableMIDIDevices)
+    {
+        [allSources addObjectsFromArray:  [device.entities valueForKeyPath:@"@unionOfArrays.sources"]];
+        [allDestinations addObjectsFromArray:  [self.device.entities valueForKeyPath:@"@unionOfArrays.destinations"]];
+    }
+         [allDestinations addObjectsFromArray:[manager virtualDestinations] ];
+}
+
+- (void) pickSourceNamed:(NSString *) name enable:(BOOL) enable
+{
+    MIKMIDIDeviceManager *manager = [MIKMIDIDeviceManager sharedDeviceManager];
+    NSError *error = nil;
+    for(MIKMIDISourceEndpoint * source in allSources.allObjects)
+    {
+        if([source.name isEqual:name])
+        {
+            BOOL success = [manager connectInput:source error:&error eventHandler:^(MIKMIDISourceEndpoint *source, NSArray *commands) {
+                for (MIKMIDICommand *command in commands) {
+                    // Handle each command
+                    // looks like incoming MIDI commands here ..
+                    NSLog(@"%@",command);
+                }
+            }];
+            if (!success) {
+                NSLog(@"Unable to connect to %@: %@", source, error);
+                // Handle the error
+            }
+        } //matches
+    }
+}
+
+- (void) pickDestinationNamed:(NSString *) name enable:(BOOL) enable
+{
+ 
+}
 //MARK: - commands
 // this is going to ge samrter vis-a-vis destinations and other messages
 - (void) noteOnAndOff:(dmidi) note vel:(float) vel
@@ -111,7 +143,7 @@ static MIDIManager * instance;
     MIKMIDINoteOffCommand *noteOff = [MIKMIDINoteOffCommand noteOffCommandWithNote:mNote velocity:0 channel:0 timestamp:[date dateByAddingTimeInterval:0.5]];
     
     MIKMIDIDeviceManager *dm = [MIKMIDIDeviceManager sharedDeviceManager];
-    for(MIKMIDIDestinationEndpoint * desty in allDests)
+    for(MIKMIDIDestinationEndpoint * desty in allDestinations.allObjects)
     {
         [dm sendCommands:@[noteOn, noteOff] toEndpoint:desty error:&error];
     }
@@ -126,8 +158,11 @@ static MIDIManager * instance;
     NSUInteger mVel = MAX(0.0,MIN(127,vel * 127.0));
     MIKMIDINoteOnCommand *noteOn = [MIKMIDINoteOnCommand noteOnCommandWithNote:mNote velocity:mVel channel:0 timestamp:date];
     
+#if LOG_MIDI_IO
+    NSLog(@"NON: %@",noteOn);
+#endif
     MIKMIDIDeviceManager *dm = [MIKMIDIDeviceManager sharedDeviceManager];
-    for(MIKMIDIDestinationEndpoint * desty in allDests)
+     for(MIKMIDIDestinationEndpoint * desty in allDestinations.allObjects)
     {
         [dm sendCommands:@[noteOn] toEndpoint:desty error:&error];
     }
@@ -143,10 +178,11 @@ static MIDIManager * instance;
     MIKMIDINoteOffCommand *noteOff = [MIKMIDINoteOffCommand noteOffCommandWithNote:mNote velocity:mVel channel:0 timestamp:date];
     
     MIKMIDIDeviceManager *dm = [MIKMIDIDeviceManager sharedDeviceManager];
-    for(MIKMIDIDestinationEndpoint * desty in allDests)
+     for(MIKMIDIDestinationEndpoint * desty in allDestinations.allObjects)
     {
         [dm sendCommands:@[noteOff] toEndpoint:desty error:&error];
     }
+     [self remove:mNote];
 }
  // lastNoteOn
 - (void) noteOnMono:(dmidi) note vel:(float) vel
@@ -166,6 +202,9 @@ static MIDIManager * instance;
             if(currentlyPlayingNotes[i]!= NOTE_EMPTY)
             {
                 NSUInteger noffMe =currentlyPlayingNotes[i];
+#if LOG_MIDI_IO
+                NSLog(@"NONMONO NOFF added: %d",(int)noffMe);
+#endif
                 MIKMIDINoteOffCommand *noteOff = [MIKMIDINoteOffCommand noteOffCommandWithNote:noffMe velocity:mVel channel:0 timestamp:date];
                 [ma_data addObject:noteOff];
             }
@@ -173,14 +212,18 @@ static MIDIManager * instance;
         [self removeAll];
      }
     
-    // make thiss after the noteoff
-    MIKMIDINoteOnCommand *noteOn = [MIKMIDINoteOnCommand noteOnCommandWithNote:mNote velocity:mVel channel:0 timestamp:[date dateByAddingTimeInterval:0.01]];
+    // make this after the noteoff
+    MIKMIDINoteOnCommand *noteOn = [MIKMIDINoteOnCommand noteOnCommandWithNote:mNote velocity:mVel channel:0 timestamp:[date dateByAddingTimeInterval:0.001]];
     [self insert:mNote];
      [ma_data addObject:noteOn];
     
+#if LOG_MIDI_IO
+    NSLog(@"NONMONO MA_DATA: %@",ma_data);
+#endif
     MIKMIDIDeviceManager *dm = [MIKMIDIDeviceManager sharedDeviceManager];
-    for(MIKMIDIDestinationEndpoint * desty in allDests)
+     for(MIKMIDIDestinationEndpoint * desty in allDestinations.allObjects)
     {
+        error = nil;
         [dm sendCommands:ma_data toEndpoint:desty error:&error];
         if(error)
         {
@@ -192,18 +235,30 @@ static MIDIManager * instance;
 
 - (void) noteOffMono:(dmidi) note vel:(float) vel
 {
-    NSError *error = nil;
-    NSDate *date = [NSDate date];
-    NSUInteger mNote = MAX(0.0,MIN(127,floor(note+0.5)));
-    NSUInteger mVel = MAX(0.0,MIN(127,vel * 127.0));
-    MIKMIDINoteOffCommand *noteOff = [MIKMIDINoteOffCommand noteOffCommandWithNote:mNote velocity:mVel channel:0 timestamp:date];
-    
-    MIKMIDIDeviceManager *dm = [MIKMIDIDeviceManager sharedDeviceManager];
-    for(MIKMIDIDestinationEndpoint * desty in allDests)
+    // it might be gone already because: mono.
+    if(playingNotesCount>0)
     {
-        [dm sendCommands:@[noteOff] toEndpoint:desty error:&error];
+        NSError *error = nil;
+        NSDate *date = [NSDate date];
+        NSUInteger mNote = MAX(0.0,MIN(127,floor(note+0.5)));
+        NSUInteger mVel = MAX(0.0,MIN(127,vel * 127.0));
+        MIKMIDINoteOffCommand *noteOff = [MIKMIDINoteOffCommand noteOffCommandWithNote:mNote velocity:mVel channel:0 timestamp:date];
+        
+#if LOG_MIDI_IO
+        NSLog(@"NOFFMONO: %@", noteOff);
+#endif
+        MIKMIDIDeviceManager *dm = [MIKMIDIDeviceManager sharedDeviceManager];
+        for(MIKMIDIDestinationEndpoint * desty in allDestinations.allObjects)
+        {
+            error = nil;
+            [dm sendCommands:@[noteOff] toEndpoint:desty error:&error];
+            if(error)
+            {
+                NSLog(@"ERROR NOFFING: %@",error);
+            }
+        }
+        [self remove:mNote];
     }
-    [self remove:mNote];
 }
 
 - (void) ANO
@@ -214,7 +269,7 @@ static MIDIManager * instance;
     MIKMIDIControlChangeCommand *ano = [MIKMIDIControlChangeCommand controlChangeCommandWithControllerNumber: 123 value:0];
 
     MIKMIDIDeviceManager *dm = [MIKMIDIDeviceManager sharedDeviceManager];
-    for(MIKMIDIDestinationEndpoint * desty in allDests)
+     for(MIKMIDIDestinationEndpoint * desty in allDestinations.allObjects)
     {
         [dm sendCommands:@[ano] toEndpoint:desty error:&error];
         
@@ -234,7 +289,7 @@ static MIDIManager * instance;
 
 -(void) insert:(NSUInteger) v
 {
-    currentlyPlayingNotes[ playingNotesCount]=v;
+    currentlyPlayingNotes[playingNotesCount]=v;
     playingNotesCount++;
 }
 

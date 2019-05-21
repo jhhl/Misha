@@ -33,10 +33,37 @@
     _ssl_bend = [[MishaSlider alloc] init];
     [self addSubview:_ssl_bend];
     
+    _bt_home = [[UILabeledButton alloc] init];
+    [_bt_home setImage:[UIImage imageNamed:@"BT blue"] forState:UIControlStateNormal];
+    _bt_home.lb_title.text= @"Home";
+    [_bt_home addTarget:self action:@selector(act_Button:) forControlEvents:UIControlEventTouchUpInside];
+    [self addSubview:_bt_home];
+    
+    _bt_undo = [[UILabeledButton alloc] init];
+    [_bt_undo setImage:[UIImage imageNamed:@"BT blue"] forState:UIControlStateNormal];
+    _bt_undo.lb_title.text= @"Undo";
+    [_bt_undo addTarget:self action:@selector(act_Button:) forControlEvents:UIControlEventTouchUpInside];
+    [self addSubview:_bt_undo];
+    
+    _bt_capo_up = [[UILabeledButton alloc] init];
+    [_bt_capo_up setImage:[UIImage imageNamed:@"BT orange"] forState:UIControlStateNormal];
+    _bt_capo_up.lb_title.text= @"(+)";
+    [_bt_capo_up addTarget:self action:@selector(act_Button:) forControlEvents:UIControlEventTouchUpInside];
+    [self addSubview:_bt_capo_up];
+    
+    _bt_capo_down = [[UILabeledButton alloc] init];
+    [_bt_capo_down setImage:[UIImage imageNamed:@"BT orange"] forState:UIControlStateNormal];
+    _bt_capo_down.lb_title.text= @"(-)";
+    [_bt_capo_down addTarget:self action:@selector(act_Button:) forControlEvents:UIControlEventTouchUpInside];
+    [self addSubview:_bt_capo_down];
+    
     [Skins afterChangingSkinDoThis:^(Skin * s)
      {
          self.backgroundColor = s.cl_bg_main;
-
+         self.bt_home.lb_title.tintColor = s.cl_lo_text;// lighter color ; skin should have a "light text" color
+         self.bt_undo.lb_title.tintColor = s.cl_lo_text;
+         self.bt_capo_up.lb_title.tintColor = s.cl_hi_text;
+         self.bt_capo_down.lb_title.tintColor = s.cl_hi_text;
      }];
 }
 // good old init
@@ -66,10 +93,12 @@
 }
 */
 //MARK: - Subviews
-#define MIN_BUTTON_SIZE 100.0
+#define MIN_DEGREE_BUTTON_SIZE 100.0
 #define MARGIN 4.0
 #define TOP_CONTROL_HEIGHT 60.0
 #define SLIDER_HEIGHT 30.0
+#define MIN_HOME_BUTTON_SIZE 45.0
+
 - (void) layoutSubviews
 {
     [super layoutSubviews];
@@ -84,7 +113,7 @@
     
     
     //landscape
-    if(5*(MIN_BUTTON_SIZE+MARGIN) <size.width)
+    if(5*(MIN_DEGREE_BUTTON_SIZE+MARGIN) <size.width)
     {
         // room for 5
         /*
@@ -197,7 +226,7 @@
         }
         
     }
-    // stick the pie and the slider inthere somehow
+    // stick the pie and the slider in there somehow
     CGFloat left = MARGIN+ buttonFrameSide.size.width + MARGIN;
     CGFloat top = MARGIN;
     CGFloat pieWidth = size.width - 2.0*(buttonFrameSide.size.width +MARGIN+MARGIN);
@@ -222,9 +251,37 @@
     
     _spv_pie.frame  = pFrame;
     
+    //now that we have a pie .. put the home and undo buttons on there
+    // but no - don't use the pie frame, use the remainign space frame
+    // "placemat frame"
+    // make room for the slider
+    CGRect pmFrame = CGRectMake(buttonFrameSide.size.width +MARGIN,
+                                      MARGIN,
+                                      size.width-(buttonFrameSide.size.width +MARGIN)*2,
+                                      size.height-((buttonFrameBase.size.height+MARGIN)+(SLIDER_HEIGHT+MARGIN+MARGIN)));
+    
+    CGFloat huWidth =  MAX(MIN_HOME_BUTTON_SIZE,pmFrame.size.width*0.15);
+    CGRect huFrame = CGRectMake(0,0,huWidth,huWidth);
+    
+    huFrame.origin.x = pmFrame.origin.x+MARGIN;
+    huFrame.origin.y = pmFrame.origin.y+MARGIN;
+    
+    _bt_home.frame=huFrame;
+    
+    huFrame.origin.x = pmFrame.origin.x+pmFrame.size.width-(huWidth+MARGIN);
+    _bt_undo.frame=huFrame;
+    
+    huFrame.origin.y = pmFrame.origin.y+pmFrame.size.height-(huWidth+MARGIN);
+    _bt_capo_up.frame=huFrame;
+    
+    huFrame.origin.x = pmFrame.origin.x+MARGIN;
+    _bt_capo_down.frame=huFrame;
+
     // shove the slider .. somewhere
-    _ssl_bend.frame  = CGRectMake(pFrame.origin.x,pFrame.origin.y+pFrame.size.height+MARGIN,
-                                  pFrame.size.width,SLIDER_HEIGHT);
+    _ssl_bend.frame  = CGRectMake(pmFrame.origin.x+MARGIN,
+                                  pmFrame.origin.y+pmFrame.size.height,
+                                  pmFrame.size.width- (MARGIN*2),
+                                  SLIDER_HEIGHT);
     
 }
 
@@ -238,6 +295,29 @@
 - (void) degreeButton:(DegreeButton *) button uppedAt:(CGPoint) p;
 {
     [_delegate  dtviewNoff:self];
+    [_spv_pie setNeedsDisplay];
+}
+
+- (void) act_Button:(UILabeledButton *) button;
+{
+    int btype = 0;
+    if (button == _bt_home)
+    {
+        btype = 1;
+    }
+    if (button == _bt_undo)
+    {
+        btype = 2;
+    }
+    if (button == _bt_capo_up)
+    {
+        btype = 3;
+    }
+    if (button == _bt_capo_down)
+    {
+        btype = 4;
+    }
+    [_delegate  dtviewButtonTouched:button type:btype];
     [_spv_pie setNeedsDisplay];
 }
 @end

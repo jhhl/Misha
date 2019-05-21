@@ -53,8 +53,7 @@
     return self;
 }
 
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
+// I think my tone spiral version would be better. 
 - (void)drawRect:(CGRect)rect {
     // Drawing code
     // as RTScale what the scale is now. in the range of +/-DEGREE_BUTTON_RANGE
@@ -97,7 +96,7 @@
     float rad =sqRect.size.height/2.0;
     float rad2 = rad*0.75;
     UIColor * textColor = Skins._.currentSkin.cl_hi_text;
-    UIColor * edgeColor = Skins._.currentSkin.cl_lo_text;
+//    UIColor * edgeColor = Skins._.currentSkin.cl_lo_text;
 
     for(int i=0;i<degrees.count;i++)
     {
@@ -112,13 +111,13 @@
                                      30.0);
 
         ScaleNode * nn = degrees[i];
-         CGContextShowNSStringInRectRSUfs(ctx,
+        // was fs, no real need for the edging.
+         CGContextShowNSStringInRectRSU(ctx,
                                           rect.size,
                                           textRect,
                                           nn.note.name,
                                           18.0,
-                                            textColor,
-                                          edgeColor);
+                                            textColor);
         currAngle+=angle;
     }
 }

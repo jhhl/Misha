@@ -5,6 +5,7 @@
 //  Created by Henry Lowengard on 4/12/19.
 //  Copyright © 2019 net.jhhl. All rights reserved.
 // may be Midified and skinned
+// also might use a different title than Button's
 
 #import <UIKit/UIKit.h>
 #import "Skin.h"
@@ -24,6 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property LabeledButtonStyle lbs_style;
 @property(strong) MIDIMapAddress* mmapAddr;
+@property (strong,nonatomic,nullable) UILabel * lb_title;
 @end
 
 NS_ASSUME_NONNULL_END

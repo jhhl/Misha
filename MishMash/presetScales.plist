@@ -22,6 +22,12 @@
 	</dict>
 	<dict>
 		<key>name</key>
+		<string>Madenda</string>
+		<key>pattern</key>
+		<string>4,2,1,4,1</string>
+	</dict>
+	<dict>
+		<key>name</key>
 		<string>Quartertone</string>
 		<key>pattern</key>
 		<string>0.5</string>

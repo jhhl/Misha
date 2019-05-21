@@ -13,12 +13,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface MIDIManager : NSObject
 {
-    NSArray *allDests;
-    MIKMIDIDestinationEndpoint * destinationEndpoint;
-    NSUInteger currentlyPlayingNotes[256];
+    NSUInteger currentlyPlayingNotes[MAX_POLYPHONY];
     NSUInteger playingNotesCount;
-
-
 }
 @property (strong,nonatomic,nullable)     MIKMIDIDevice * device;
 
